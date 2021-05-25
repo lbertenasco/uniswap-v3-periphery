@@ -24,10 +24,10 @@ library OracleLibrary {
         (int56[] memory tickCumulatives, ) = IUniswapV3Pool(pool).observe(secondAgos);
         int56 tickCumulativesDelta = tickCumulatives[1] - tickCumulatives[0];
 
-        timeWeightedAverageTick = int24(tickCumulativesDelta / period);
+        timeWeightedAverageTick = int24(tickCumulativesDelta / int(uint256(period)));
 
         // Always round to negative infinity
-        if (tickCumulativesDelta < 0 && (tickCumulativesDelta % period != 0)) timeWeightedAverageTick--;
+        if (tickCumulativesDelta < 0 && (tickCumulativesDelta % int(uint256(period)) != 0)) timeWeightedAverageTick--;
     }
 
     /// @notice Given a tick and a token amount, calculates the amount of token received in exchange
